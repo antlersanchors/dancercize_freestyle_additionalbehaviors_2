@@ -82,10 +82,10 @@ void steppingSound(){
     
   }
 
-  if (stepping = true) {
+  if (stepping == true) {
     Music.setGain(0.0005f/Music.getGain());
   }
-  if (stepping = false) {
+  if (stepping == false) {
     Music.setGain(0.9995f*Music.getGain());
   }
   
@@ -140,6 +140,7 @@ void awkward() {
     delay (375);
   
 }
+
 
 
 
