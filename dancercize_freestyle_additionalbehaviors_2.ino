@@ -11,12 +11,14 @@
 
 int duty, count, fout;
 int xA, xB;
-int xA_old, xB_old; // for our new audio accents
+
+// for our new audio accents
+int xA_old, xB_old; 
 boolean stepping = false;
 int stepThreshold = 75;
 int stepA_dist, stepB_dist;
-
 long prevTime;
+// end audio additions
 
 int xt, x, xold, F;
 int K = 20;
@@ -28,10 +30,6 @@ void setup(){
   MotorB.init();
   Music.init();
   Music.setGain(0);
-
-  usbMIDI.setHandleNoteOff(OnNoteOff);
-  usbMIDI.setHandleNoteOn(OnNoteOn);
-  usbMIDI.setHandleControlChange(OnControlChange);
   
   analogReadAveraging(32);
 
@@ -46,7 +44,7 @@ void loop(){
 
   dance();
 
-  steppingSound();
+  steppingSound(); // calls the audio function
   
   if(abs(xA-xB) >= (800)) {
 //feel increasing heartbeat?
@@ -58,7 +56,7 @@ void loop(){
   }
 }
 
-void steppingSound(){
+void steppingSound(){ //  a new function for audio
   stepA_dist = abs(xA_old - xA);
   stepB_dist = abs(xB_old - xB);
 
@@ -130,7 +128,8 @@ void awkward() {
     MotorA.start();
     MotorB.start();
     MotorA.torque(foutA + p);
-    
+
+    // ADDED MUSIC STUFF HERE
     Music.setWaveform1(TRIANGLE);
     Music.setWaveform2(SINE);
     Music.setWaveform3(SINE);
@@ -145,22 +144,19 @@ void awkward() {
     Music.setGain3(0.001 * stepA_dist);
     Music.setPortamento(39);
     Serial.println("wobble");
+    // END AUDIO ADDITIONS
 
     MotorB.torque(foutB + p);
     delay (10);
-//    Music.noteOff();
     MotorA.torque(0);
     MotorB.torque(0);
     delay (175);
     MotorA.torque(foutA - p);
-//    Music.noteOn(map(analogRead(A1),0,1023,35,65));
     MotorB.torque(foutB - p);
     delay (20);
-//    Music.noteOff();
     MotorA.torque(0);
     MotorB.torque(0);
-//    MotorA.stop();
-//    MotorB.stop();
+
     delay (375);
   
 }
