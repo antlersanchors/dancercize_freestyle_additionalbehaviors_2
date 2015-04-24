@@ -13,7 +13,7 @@ int duty, count, fout;
 int xA, xB;
 int xA_old, xB_old; // for our new audio accents
 boolean stepping = false;
-int stepThreshold = 50;
+int stepThreshold = 75;
 int stepA_dist, stepB_dist;
 
 long prevTime;
@@ -66,20 +66,25 @@ void steppingSound(){
 
     stepping = true;
 
-    Music.setWaveform1(FUZZ);
-    Music.setWaveform2(NOISE);
-    Music.setFrequency1(10000);
+    Music.setWaveform1(SAW);
+    Music.setWaveform2(SINE);
+    Music.setWaveform3(TAN1);
+    Music.setFrequency1(12000);
+    Music.setFrequency2(280);
+    Music.setFrequency3(561);
     Music.setGain1(0.00001 * stepA_dist);
     Music.setGain2(0.00001 * stepA_dist);
+    Music.setGain3(0.00001 * stepA_dist);
     Serial.println("stepping soundA");
 
   } else if (stepB_dist >= stepThreshold) {
 
     stepping = true;
 
-    Music.setWaveform1(FUZZ);
-    Music.setWaveform2(NOISE);
-    Music.setFrequency1(12000);
+    Music.setWaveform1(SAW);
+    Music.setWaveform2(SINE);
+    Music.setFrequency1(10000);
+    Music.setFrequency2(468);
     Music.setGain1(0.00001 * stepB_dist);
     Music.setGain2(0.00001 * stepB_dist);
     Serial.println("stepping soundB");
@@ -89,11 +94,8 @@ void steppingSound(){
     
   }
 
-  // if (stepping == true) {
-  //   Music.setGain(0.0005f/Music.getGain());
-  // }
   if (stepping == false) {
-    Music.setGain(0.9995f*Music.getGain());
+    Music.setGain(0.6995f*Music.getGain());
   }
   
   if(millis() - prevTime >= 500){
@@ -147,6 +149,7 @@ void awkward() {
     delay (375);
   
 }
+
 
 
 
