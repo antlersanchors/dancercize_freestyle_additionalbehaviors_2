@@ -14,6 +14,8 @@ boolean stepping = false;
 int stepThreshold = 50;
 int stepA_dist, stepB_dist;
 
+long prevTime;
+
 int xt, x, xold, F;
 int K = 20;
 
@@ -29,6 +31,8 @@ void setup(){
   Music.setGain2(1.0f);
   
   analogReadAveraging(32);
+
+  prevTime = millis();
 }
 
 void loop(){
@@ -62,23 +66,32 @@ void steppingSound(){
 
   if (stepA_dist >= stepThreshold) {
 
-    Music.setWaveform(SINE);
-    Music.setFrequency(449);
-    Music.setGain(1.0);
-    
+    Music.setWaveform1(FUZZ);
+    Music.setWaveform2(NOISE);
+    Music.setFrequency1(10000);
+    Music.setGain1(0.001);
+    Music.setGain2(0.001);
     Serial.println("stepping soundA");
+
   } else if (stepB_dist >= stepThreshold) {
-    Music.setWaveform(SINE);
-    Music.setFrequency(449);
-    Music.setGain(1.0);
+    Music.setWaveform1(FUZZ);
+    Music.setWaveform2(NOISE);
+    Music.setFrequency1(12000);
+    Music.setGain1(0.001);
+    Music.setGain2(0.001);
     Serial.println("stepping soundB");
+
   } else {
     Music.setGain(0);
     Serial.println("silent");
+    
   }
   
-  xA_old = xA;
-  xB_old = xB;
+  if(millis() - prevTime >= 500){
+    xA_old = xA;
+    xB_old = xB;
+    prevTime = millis();
+  }
 }
 
 void dance() {
@@ -169,3 +182,5 @@ void awkward() {
   
   
 }
+
+
