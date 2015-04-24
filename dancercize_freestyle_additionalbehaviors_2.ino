@@ -130,7 +130,21 @@ void awkward() {
     MotorA.start();
     MotorB.start();
     MotorA.torque(foutA + p);
-//    Music.noteOn(map(analogRead(A1),0,1023,30,60));
+    
+    Music.setWaveform1(TRIANGLE);
+    Music.setWaveform2(SINE);
+    Music.setWaveform3(SINE);
+    Music.setFrequency1(50);
+    Music.setFrequency2(80);
+    Music.setFrequency3(65);
+    Music.setGain1(0.001 * stepA_dist);
+    Music.setGain2(0.001 * stepB_dist);
+    Music.setGain2(0.001 * stepB_dist);
+    Music.setGain1(0.001 * stepA_dist);
+    Music.setGain3(0.001 * stepB_dist);
+    Music.setGain3(0.001 * stepA_dist);
+    Serial.println("wobble");
+
     MotorB.torque(foutB + p);
     delay (10);
 //    Music.noteOff();
