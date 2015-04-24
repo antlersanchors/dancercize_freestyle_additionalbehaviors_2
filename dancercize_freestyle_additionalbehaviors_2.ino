@@ -143,6 +143,7 @@ void awkward() {
     Music.setGain1(0.001 * stepA_dist);
     Music.setGain3(0.001 * stepB_dist);
     Music.setGain3(0.001 * stepA_dist);
+    Music.setPortamento(39);
     Serial.println("wobble");
 
     MotorB.torque(foutB + p);
