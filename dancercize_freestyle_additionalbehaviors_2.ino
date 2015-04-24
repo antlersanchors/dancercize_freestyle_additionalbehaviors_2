@@ -80,8 +80,8 @@ void steppingSound(){
     Music.setWaveform1(FUZZ);
     Music.setWaveform2(NOISE);
     Music.setFrequency1(12000);
-    Music.setGain1(0.001);
-    Music.setGain2(0.001);
+    Music.setGain1(0.0001 * stepB_dist);
+    Music.setGain2(0.0001 * stepB_dist);
     Serial.println("stepping soundB");
 
   } else {
@@ -147,6 +147,7 @@ void awkward() {
     delay (375);
   
 }
+
 
 
 
