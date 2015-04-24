@@ -7,6 +7,9 @@
 #include <EEPROM.h>
 #include <M3T3.h>
 
+#define MIDI_CHANNEL 1
+
+
 int duty, count, fout;
 int xA, xB;
 int xA_old, xB_old; // for our new audio accents
@@ -87,13 +90,14 @@ void steppingSound(){
     Serial.println("stepping soundB");
 
   } else {
-
     stepping = false;
     
   }
 
+  if (stepping = true) {
+    Music.setGain(0.0005f/Music.getGain());
+  }
   if (stepping = false) {
-
     Music.setGain(0.9995f*Music.getGain());
   }
   
