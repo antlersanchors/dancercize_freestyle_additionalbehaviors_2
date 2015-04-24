@@ -9,7 +9,6 @@
 
 #define MIDI_CHANNEL 1
 
-
 int duty, count, fout;
 int xA, xB;
 int xA_old, xB_old; // for our new audio accents
@@ -28,10 +27,6 @@ void setup(){
   MotorA.init();
   MotorB.init();
   Music.init();
-  Music.setWaveform1(0);//8bit default?
-  Music.setWaveform2(0);
-  Music.setGain1(1.0f);
-  Music.setGain2(1.0f);
   
   analogReadAveraging(32);
 
@@ -39,17 +34,12 @@ void setup(){
 }
 
 void loop(){
-  
   xA = analogRead(A1);
-  Music.setFrequency1(map (xA, 0, 1023, 40, 2000)); 
-  
   xB = analogRead(A9);
-  Music.setFrequency2(map (xB, 0, 1023, 40, 2000));  
 
   dance();
 
   steppingSound();
-
   
   if(abs(xA-xB) >= (800)) {
 //feel increasing heartbeat?
@@ -58,9 +48,7 @@ void loop(){
   Serial.println(xA-xB); 
   } else {
    dance(); 
-  // Serial.println("Dancing!");
   }
-
 }
 
 void steppingSound(){
@@ -109,7 +97,6 @@ void steppingSound(){
 }
 
 void dance() {
-     
   int foutA = -0.3*(xA-xB); 
   MotorA.torque(foutA);  
  
@@ -117,48 +104,6 @@ void dance() {
   MotorB.torque(foutB);   
   
 }
-
-//void steps() {
-// 
-//  xold = xA;
-//  xt = xA % 250; //same force for each 250 ranage
-//  F = 0;
-//  if (xt > 60) F = - K * (xt - 60);
-//  if (xt > 80) F = - K * (100 - xt);
-//  if (xt > 120) F =  K * (140 - xt);
-//  if (xt > 140) F = 0;
-//  MotorA.torque(F);
-//    
-//  
-//}
-
-//void wobble() {
-//  float k = 15; // spring coefficient (stiffness)
-//  float m = 50; // mass
-//  float d = 2.0;  // damping coefficient
-//
-//  float x = analogRead(A1);
-//  float v;
-//  float f;
-//
-//  long tick = 0;
-//  int last_pos = 0;
-//
-//  long tick_now = millis();  
-//  float dt = (float)(tick_now - tick) / 100.0f;
-//        
-//  int current_pos = analogRead(A1);  
-//  
-//  f = k * (current_pos - x) - (d * v);
-//  v += (f / m) * dt;
-//  x += v * dt;
-//      
-//  tick = millis();
-//  
-//  int t = map(f, -5000, 5000, -512, 512);   // re-mapping the force to a (valid) torque value
-//  MotorA.torque(t); 
-//  
-//}
 
 void awkward() {
 
@@ -194,7 +139,7 @@ void awkward() {
 //    MotorB.stop();
     delay (375);
   
-  
 }
+
 
 
