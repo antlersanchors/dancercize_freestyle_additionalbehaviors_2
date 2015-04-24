@@ -27,6 +27,11 @@ void setup(){
   MotorA.init();
   MotorB.init();
   Music.init();
+  Music.setGain(0);
+
+  usbMIDI.setHandleNoteOff(OnNoteOff);
+  usbMIDI.setHandleNoteOn(OnNoteOn);
+  usbMIDI.setHandleControlChange(OnControlChange);
   
   analogReadAveraging(32);
 
@@ -34,6 +39,8 @@ void setup(){
 }
 
 void loop(){
+  usbMIDI.read();
+  
   xA = analogRead(A1);
   xB = analogRead(A9);
 
@@ -82,9 +89,9 @@ void steppingSound(){
     
   }
 
-  if (stepping == true) {
-    Music.setGain(0.0005f/Music.getGain());
-  }
+  // if (stepping == true) {
+  //   Music.setGain(0.0005f/Music.getGain());
+  // }
   if (stepping == false) {
     Music.setGain(0.9995f*Music.getGain());
   }
@@ -140,6 +147,7 @@ void awkward() {
     delay (375);
   
 }
+
 
 
 
