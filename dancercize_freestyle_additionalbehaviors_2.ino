@@ -59,8 +59,8 @@ void loop(){
 }
 
 void steppingSound(){
-  stepA_dist = xA_old - xA;
-  stepB_dist = xB_old - xB;
+  stepA_dist = abs(xA_old - xA);
+  stepB_dist = abs(xB_old - xB);
 
   if (stepA_dist >= stepThreshold) {
 
@@ -69,8 +69,8 @@ void steppingSound(){
     Music.setWaveform1(FUZZ);
     Music.setWaveform2(NOISE);
     Music.setFrequency1(10000);
-    Music.setGain1(0.001 / stepA_dist);
-    Music.setGain2(0.001 / stepA_dist);
+    Music.setGain1(0.00001 * stepA_dist);
+    Music.setGain2(0.00001 * stepA_dist);
     Serial.println("stepping soundA");
 
   } else if (stepB_dist >= stepThreshold) {
@@ -80,8 +80,8 @@ void steppingSound(){
     Music.setWaveform1(FUZZ);
     Music.setWaveform2(NOISE);
     Music.setFrequency1(12000);
-    Music.setGain1(0.0001 * stepB_dist);
-    Music.setGain2(0.0001 * stepB_dist);
+    Music.setGain1(0.00001 * stepB_dist);
+    Music.setGain2(0.00001 * stepB_dist);
     Serial.println("stepping soundB");
 
   } else {
