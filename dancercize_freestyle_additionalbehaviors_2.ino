@@ -9,8 +9,14 @@
 
 int duty, count, fout;
 int xA, xB;
+int xA_old, xB_old; // for our new audio accents
+boolean stepping = false;
+int stepThreshold = 50;
+int stepA_dist, stepB_dist;
+
 int xt, x, xold, F;
 int K = 20;
+
 
 void setup(){
   Serial.begin(9600);
@@ -34,11 +40,9 @@ void loop(){
   Music.setFrequency2(map (xB, 0, 1023, 40, 2000));  
 
   dance();
-   
-//  if (abs(xA-xB) >= (200)) {
-////wobble using pendelum?
-//    wobble();   
-//  }
+
+  steppingSound();
+
   
   if(abs(xA-xB) >= (800)) {
 //feel increasing heartbeat?
@@ -47,9 +51,34 @@ void loop(){
   Serial.println(xA-xB); 
   } else {
    dance(); 
-  Serial.println("Dancing!");
+  // Serial.println("Dancing!");
   }
 
+}
+
+void steppingSound(){
+  stepA_dist = xA_old - xA;
+  stepB_dist = xB_old - xB;
+
+  if (stepA_dist >= stepThreshold) {
+
+    Music.setWaveform(SINE);
+    Music.setFrequency(449);
+    Music.setGain(1.0);
+    
+    Serial.println("stepping soundA");
+  } else if (stepB_dist >= stepThreshold) {
+    Music.setWaveform(SINE);
+    Music.setFrequency(449);
+    Music.setGain(1.0);
+    Serial.println("stepping soundB");
+  } else {
+    Music.setGain(0);
+    Serial.println("silent");
+  }
+  
+  xA_old = xA;
+  xB_old = xB;
 }
 
 void dance() {
